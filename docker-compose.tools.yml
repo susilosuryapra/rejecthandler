@@ -1,0 +1,20 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: rejecthandler_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - rejecthandler_dev_network
+      - rejecthandler_prod_network
+
+networks:
+  rejecthandler_dev_network:
+    external: true
+    name: rejecthandler-dev_rejecthandler_dev_network
+  rejecthandler_prod_network:
+    external: true
+    name: rejecthandler-prod_rejecthandler_prod_network

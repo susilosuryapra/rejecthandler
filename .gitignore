@@ -1,0 +1,13 @@
+# Environment files
+.env.dev
+.env.prod
+src/.env
+
+# Laravel
+src/vendor/
+src/node_modules/
+src/storage/logs/
+src/.env.backup
+
+# Docker
+docker-compose.override.yml
