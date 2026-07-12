@@ -73,19 +73,19 @@
                     <i class="fas fa-save"></i> Save
                 </button>
 
-                <form method="POST" action="{{ route('users.destroy', $user->uuid) }}"
-                      style="display:inline"
-                      onsubmit="return confirm('Yakin ingin menghapus user ini?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </form>
-
                 <a href="{{ route('users.index') }}" class="btn btn-secondary">
                     Batal
                 </a>
+            </form>
+
+            <form method="POST" action="{{ route('users.destroy', $user->uuid) }}"
+                    style="display:inline"
+                    onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
             </form>
         </div>
     </div>
