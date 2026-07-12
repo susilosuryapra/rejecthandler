@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(\App\Models\User::all() as $index => $user)
+                    @foreach(\App\Models\User::orderBy('created_at', 'asc')->get() as $index => $user)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $user->user_id }}</td>
