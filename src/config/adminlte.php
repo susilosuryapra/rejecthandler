@@ -318,12 +318,14 @@ return [
         	'url'     => 'users',
         	'icon'    => 'fas fa-users',
         	'role'    => 'Admin',
+            'can'     => 'manage-users',
     	],
     	[
         	'text'    => 'Audit Trail',
         	'url'     => 'audit-trail',
         	'icon'    => 'fas fa-history',
         	'role'    => 'Admin',
+            'can'     => 'view-audit-trail',
     	],
     ],
     /*
