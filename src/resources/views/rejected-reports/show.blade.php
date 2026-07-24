@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <th>Catatan</th>
-                    <td>{{ $report->catatan ?? '-' }}</td>
+                    <td>{!! nl2br(e($report->catatan)) ?? '-' !!}</td>
                 </tr>
             </table>
 
