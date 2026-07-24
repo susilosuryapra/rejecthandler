@@ -20,7 +20,7 @@
                 </a>
             @endif
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow-x: auto;">
             <table id="reports-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>

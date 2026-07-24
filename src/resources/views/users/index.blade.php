@@ -18,7 +18,7 @@
                 <i class="fas fa-plus"></i> Create
             </a>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="overflow-x: auto;">
             <table id="users-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>

@@ -14,6 +14,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles, LogsActivity;
 
+    public bool $disableLoggingOnClean = true;
+    protected static $recordEvents = [];
+
     protected $fillable = [
         'user_id',
         'uuid',
@@ -50,12 +53,7 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'role', 'user_id'])
-            ->logOnlyDirty()
-            ->setDescriptionForEvent(fn(string $eventName) => match($eventName) {
-                'created' => 'Membuat user baru',
-                'updated' => 'Mengupdate data user',
-                'deleted' => 'Menghapus user',
-            });
+            ->dontLogIfAttributesChangedOnly(['remember_token', 'updated_at'])
+            ->dontSubmitEmptyLogs();
     }
 }

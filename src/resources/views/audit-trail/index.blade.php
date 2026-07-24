@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-body">
+        <div class="card-body" style="overflow-x: auto;">
             <table id="audit-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>

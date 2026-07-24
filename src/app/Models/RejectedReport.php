@@ -12,6 +12,8 @@ class RejectedReport extends Model
 {
     use HasFactory, LogsActivity;
 
+    protected static $recordEvents = [];
+
     protected $fillable = [
         'uuid',
         'tanggal',
