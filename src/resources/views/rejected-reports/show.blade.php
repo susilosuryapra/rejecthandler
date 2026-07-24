@@ -33,7 +33,7 @@
                 <tr>
                     <th>Jenis Cacat</th>
                     <td>
-                        @foreach($report->jenis_cacat as $cacat)
+                        @foreach ($report->jenis_cacat as $cacat)
                             <span class="badge badge-danger">{{ $cacat }}</span>
                         @endforeach
                     </td>
@@ -41,7 +41,7 @@
                 <tr>
                     <th>Keputusan Handling</th>
                     <td>
-                        @foreach($report->keputusan_handling as $handling)
+                        @foreach ($report->keputusan_handling as $handling)
                             <span class="badge badge-info">{{ $handling }}</span>
                         @endforeach
                     </td>
@@ -55,56 +55,78 @@
             {{-- Tracker signing --}}
             <div class="mt-4">
                 <h5>Tracker</h5>
-                <div class="d-flex">
-                    @php
-                        $signers = [
-                            'SPV QC'   => $report->checked_by_qc,
-                            'SPV PROD' => $report->checked_by_prod,
-                            'PPIC'     => $report->checked_by_ppic,
-                            'Merch'    => $report->checked_by_merch,
-                            'Gudang'   => $report->checked_by_stor,
-                            'Account'  => $report->checked_by_acc,
-                        ];
-                    @endphp
-                    @foreach($signers as $label => $signed)
-                        <div class="text-center mr-4">
-                            <div>{{ $label }}</div>
-                            <div>
-                                @if($signed)
-                                    <i class="fas fa-check text-success fa-2x"></i>
-                                @else
-                                    <i class="fas fa-times text-danger fa-2x"></i>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm text-center">
+                        <thead>
+                            <tr>
+                                <th>SPV Quality Control</th>
+                                <th>SPV Production</th>
+                                <th>PPIC</th>
+                                <th>Merchandiser</th>
+                                <th>Gudang</th>
+                                <th>Accounting</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @php
+                                    $signers = [
+                                        'SPV QC' => $report->checked_by_qc,
+                                        'SPV PROD' => $report->checked_by_prod,
+                                        'PPIC' => $report->checked_by_ppic,
+                                        'Merch' => $report->checked_by_merch,
+                                        'Gudang' => $report->checked_by_stor,
+                                        'Account' => $report->checked_by_acc,
+                                    ];
+                                @endphp
+                                @foreach ($signers as $label => $signed)
+                                    <td>
+                                        @if ($signed)
+                                            <i class="fas fa-check text-success fa-2x"></i>
+                                        @else
+                                            <i class="fas fa-times text-danger fa-2x"></i>
+                                        @endif
+                                    </td>
+                                @endforeach
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <div class="mt-4">
-                @if($role == 'Admin' || $role == 'Supervisor QC')
-                    <a href="{{ route('rejected-reports.edit', $report->uuid) }}"
-                       class="btn btn-warning">
+                @if ($role == 'Admin' || $role == 'Supervisor QC')
+                    <a href="{{ route('rejected-reports.edit', $report->uuid) }}" class="btn btn-warning">
                         <i class="fas fa-edit"></i> Edit
                     </a>
                 @endif
 
                 @php
-                    $canSign = match($role) {
+                    $canSign = match ($role) {
                         'Supervisor Produksi' => $report->checked_by_qc && !$report->checked_by_prod,
-                        'PPIC'                => $report->checked_by_qc && $report->checked_by_prod && !$report->checked_by_ppic,
-                        'Merchandiser'        => $report->checked_by_qc && $report->checked_by_prod && $report->checked_by_ppic && !$report->checked_by_merch,
-                        'Gudang'              => $report->checked_by_qc && $report->checked_by_prod && $report->checked_by_ppic && $report->checked_by_merch && !$report->checked_by_stor,
-                        'Akunting'            => $report->checked_by_qc && $report->checked_by_prod && $report->checked_by_ppic && $report->checked_by_merch && $report->checked_by_stor && !$report->checked_by_acc,
-                        default               => false,
+                        'PPIC' => $report->checked_by_qc && $report->checked_by_prod && !$report->checked_by_ppic,
+                        'Merchandiser' => $report->checked_by_qc &&
+                            $report->checked_by_prod &&
+                            $report->checked_by_ppic &&
+                            !$report->checked_by_merch,
+                        'Gudang' => $report->checked_by_qc &&
+                            $report->checked_by_prod &&
+                            $report->checked_by_ppic &&
+                            $report->checked_by_merch &&
+                            !$report->checked_by_stor,
+                        'Akunting' => $report->checked_by_qc &&
+                            $report->checked_by_prod &&
+                            $report->checked_by_ppic &&
+                            $report->checked_by_merch &&
+                            $report->checked_by_stor &&
+                            !$report->checked_by_acc,
+                        default => false,
                     };
                 @endphp
 
-                @if($canSign)
-                    <form method="POST"
-                          action="{{ route('rejected-reports.sign', $report->uuid) }}"
-                          style="display:inline"
-                          onsubmit="return confirm('Yakin ingin men-sign report ini?')">
+                @if ($canSign)
+                    <form method="POST" action="{{ route('rejected-reports.sign', $report->uuid) }}" style="display:inline"
+                        onsubmit="return confirm('Yakin ingin men-sign report ini?')">
                         @csrf
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-signature"></i> Sign
