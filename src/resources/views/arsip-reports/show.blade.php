@@ -95,13 +95,41 @@
             </div>
 
             <div class="mt-4">
-                <a href="{{ route('arsip-reports.download', $report->uuid) }}" class="btn btn-success">
-                    <i class="fas fa-download"></i> Download PDF
-                </a>
+                <form method="GET" action="{{ route('arsip-reports.download', $report->uuid) }}" id="form-download"
+                    style="display:inline">
+                    <button type="button" class="btn btn-success btn-download">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                </form>
                 <a href="{{ route('arsip-reports.index') }}" class="btn btn-secondary">
                     Kembali
                 </a>
             </div>
         </div>
     </div>
+@endsection
+
+@section('plugins.Sweetalert2', true)
+
+@section('js')
+    <script>
+        $('.btn-download').click(function(e) {
+            e.preventDefault();
+            var url = "{{ route('arsip-reports.download', $report->uuid) }}";
+            Swal.fire({
+                title: 'Download PDF',
+                text: 'Yakin ingin mendownload report ini?',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Download!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.value) {
+                    window.location = url;
+                }
+            });
+        });
+    </script>
 @endsection
