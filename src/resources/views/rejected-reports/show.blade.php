@@ -96,7 +96,7 @@
 
             <div class="mt-4">
                 @if ($role == 'Admin' || $role == 'Supervisor QC')
-                    <a href="{{ route('rejected-reports.edit', $report->uuid) }}" class="btn btn-warning">
+                    <a href="{{ route('rejected-reports.edit', $report->uuid) }}" class="btn btn-warning btn-edit">
                         <i class="fas fa-edit"></i> Edit
                     </a>
                 @endif
@@ -126,9 +126,9 @@
 
                 @if ($canSign)
                     <form method="POST" action="{{ route('rejected-reports.sign', $report->uuid) }}" style="display:inline"
-                        onsubmit="return confirm('Yakin ingin men-sign report ini?')">
+                        id="form-sign">
                         @csrf
-                        <button type="submit" class="btn btn-success">
+                        <button type="button" class="btn btn-success btn-sign">
                             <i class="fas fa-signature"></i> Sign
                         </button>
                     </form>
@@ -140,4 +140,48 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('plugins.Sweetalert2', true)
+
+@section('js')
+    <script>
+        // Alert untuk Sign
+        $('.btn-sign').click(function() {
+            Swal.fire({
+                title: 'Konfirmasi Sign',
+                text: 'Yakin ingin men-sign report ini?',
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Sign!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.value) {
+                    $('#form-sign').submit();
+                }
+            });
+        });
+
+        // Alert untuk Edit
+        $('.btn-edit').click(function(e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            Swal.fire({
+                title: 'Konfirmasi Edit',
+                text: 'Yakin ingin mengedit report ini?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ffc107',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Edit!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = url;
+                }
+            });
+        });
+    </script>
 @endsection
