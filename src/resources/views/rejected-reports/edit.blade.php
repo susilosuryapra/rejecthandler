@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="{{ route('rejected-reports.update', $report->uuid) }}">
+            <form method="POST" action="{{ route('rejected-reports.update', $report->uuid) }}" id="form-edit-report">
                 @csrf
                 @method('PUT')
 
@@ -99,7 +99,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-primary btn-save">
                     <i class="fas fa-save"></i> Save
                 </button>
 
@@ -118,4 +118,27 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('plugins.Sweetalert2', true)
+
+@section('js')
+    <script>
+        $('.btn-save').click(function(e) {
+            Swal.fire({
+                title: 'Konfirmasi Simpan',
+                text: 'Yakin ingin menyimpan perubahan ini?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Simpan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.value) {
+                    $('#form-edit-report').submit();
+                }
+            });
+        });
+    </script>
 @endsection
