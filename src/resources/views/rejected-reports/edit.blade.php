@@ -109,7 +109,7 @@
             </form>
 
             <form method="POST" action="{{ route('rejected-reports.destroy', $report->uuid) }}" style="display:inline"
-                onsubmit="return confirm('Yakin ingin menghapus report ini?')">
+                id="form-delete-user">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger">
@@ -124,6 +124,25 @@
 
 @section('js')
     <script>
+        $('.btn-danger').click(function(e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: 'Yakin ingin menghapus user ini? Data tidak bisa dikembalikan!',
+                type: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.value) {
+                    $('#form-delete-user').submit();
+                }
+            });
+        });
+
         $('.btn-save').click(function(e) {
             Swal.fire({
                 title: 'Konfirmasi Simpan',
