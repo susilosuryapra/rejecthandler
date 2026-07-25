@@ -102,7 +102,7 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.value) {
-                    form.submit();
+                    $('#form-edit-user').submit();
                 }
             });
         });
