@@ -6,7 +6,7 @@
     <title>Report Barang Reject - {{ $report->nomor_batch }}</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: DejaVu Sans, sans-serif;
             font-size: 12px;
         }
 
@@ -41,6 +41,12 @@
 
         .tracker table td {
             text-align: center;
+        }
+
+        .check {
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -80,7 +86,7 @@
         </tr>
         <tr>
             <th>Catatan</th>
-            <td>{{ $report->catatan ?? '-' }}</td>
+            <td>{!! nl2br(e($report->catatan ?? '-')) !!}</td>
         </tr>
     </table>
 
@@ -91,17 +97,17 @@
                 <th>SPV QC</th>
                 <th>SPV PROD</th>
                 <th>PPIC</th>
-                <th>Merch</th>
+                <th>Merchandiser</th>
                 <th>Gudang</th>
-                <th>Account</th>
+                <th>Accountant</th>
             </tr>
             <tr>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
-                <td>✓</td>
+                <td class="check">{{ $report->checked_by_qc ? '✓' : '-' }}</td>
+                <td class="check">{{ $report->checked_by_prod ? '✓' : '-' }}</td>
+                <td class="check">{{ $report->checked_by_ppic ? '✓' : '-' }}</td>
+                <td class="check">{{ $report->checked_by_merch ? '✓' : '-' }}</td>
+                <td class="check">{{ $report->checked_by_stor ? '✓' : '-' }}</td>
+                <td class="check">{{ $report->checked_by_acc ? '✓' : '-' }}</td>
             </tr>
         </table>
     </div>
