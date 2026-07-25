@@ -9,14 +9,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form method="POST" action="{{ route('users.store') }}">
+            <form method="POST" action="{{ route('users.store') }}" id="form-create-user">
                 @csrf
 
                 <div class="form-group">
                     <label>Employee ID</label>
-                    <input type="text" name="user_id"
-                           class="form-control @error('user_id') is-invalid @enderror"
-                           value="{{ old('user_id') }}">
+                    <input type="text" name="user_id" class="form-control @error('user_id') is-invalid @enderror"
+                        value="{{ old('user_id') }}">
                     @error('user_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -24,9 +23,8 @@
 
                 <div class="form-group">
                     <label>Employee Name</label>
-                    <input type="text" name="name"
-                           class="form-control @error('name') is-invalid @enderror"
-                           value="{{ old('name') }}">
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -34,9 +32,8 @@
 
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email"
-                           class="form-control @error('email') is-invalid @enderror"
-                           value="{{ old('email') }}">
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}">
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -44,8 +41,7 @@
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password"
-                           class="form-control @error('password') is-invalid @enderror">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -53,12 +49,10 @@
 
                 <div class="form-group">
                     <label>Employee Role</label>
-                    <select name="role"
-                            class="form-control @error('role') is-invalid @enderror">
+                    <select name="role" class="form-control @error('role') is-invalid @enderror">
                         <option value="">-- Pilih Role --</option>
-                        @foreach($roles as $role)
-                            <option value="{{ $role }}"
-                                {{ old('role') == $role ? 'selected' : '' }}>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role }}" {{ old('role') == $role ? 'selected' : '' }}>
                                 {{ $role }}
                             </option>
                         @endforeach
@@ -68,7 +62,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-primary btn-save">
                     <i class="fas fa-save"></i> Save
                 </button>
                 <a href="{{ route('users.index') }}" class="btn btn-secondary">
@@ -77,4 +71,27 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('plugins.Sweetalert2', true)
+
+@section('js')
+    <script>
+        $('.btn-save').click(function(e) {
+            Swal.fire({
+                title: 'Konfirmasi Simpan',
+                text: 'Yakin ingin membuat user baru ini?',
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Simpan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.value) {
+                    $('#form-create-user').submit();
+                }
+            });
+        });
+    </script>
 @endsection
