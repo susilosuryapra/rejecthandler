@@ -12,7 +12,7 @@
 
     $bodyClasses = "{$authType}-page";
 
-    if (! empty(config('adminlte.layout_dark_mode', null))) {
+    if (!empty(config('adminlte.layout_dark_mode', null))) {
         $bodyClasses .= ' dark-mode';
     }
 @endphp
@@ -30,28 +30,20 @@
         {{-- Logo --}}
         <div class="{{ $authType }}-logo">
             <a href="{{ $dashboardUrl }}">
-
-                {{-- Logo Image --}}
-                @if (config('adminlte.auth_logo.enabled', false))
-                    <img src="{{ asset(config('adminlte.auth_logo.img.path')) }}"
-                         alt="{{ config('adminlte.auth_logo.img.alt') }}"
-                         @if (config('adminlte.auth_logo.img.class', null))
-                            class="{{ config('adminlte.auth_logo.img.class') }}"
-                         @endif
-                         @if (config('adminlte.auth_logo.img.width', null))
-                            width="{{ config('adminlte.auth_logo.img.width') }}"
-                         @endif
-                         @if (config('adminlte.auth_logo.img.height', null))
-                            height="{{ config('adminlte.auth_logo.img.height') }}"
-                         @endif>
+                @hasSection('auth_logo')
+                    @yield('auth_logo')
                 @else
-                    <img src="{{ asset(config('adminlte.logo_img')) }}"
-                         alt="{{ config('adminlte.logo_img_alt') }}" height="50">
+                    @if (config('adminlte.auth_logo.enabled', false))
+                        <img src="{{ asset(config('adminlte.auth_logo.img.path')) }}"
+                            alt="{{ config('adminlte.auth_logo.img.alt') }}"
+                            width="{{ config('adminlte.auth_logo.img.width') }}"
+                            height="{{ config('adminlte.auth_logo.img.height') }}">
+                    @else
+                        <img src="{{ asset(config('adminlte.logo_img')) }}" alt="{{ config('adminlte.logo_img_alt') }}"
+                            height="50">
+                    @endif
+                    {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
                 @endif
-
-                {{-- Logo Label --}}
-                {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
-
             </a>
         </div>
 
