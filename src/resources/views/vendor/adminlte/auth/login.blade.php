@@ -16,13 +16,13 @@
 
 @section('auth_logo')
     <a href="#">
-        <img src="{{ asset('images/sewing-machine-icon.png') }}" alt="RejectHandler" width="60" height="60">
-        <span style="color: #000; font-size: 1.5rem; font-weight: bold; vertical-align: middle;">
+        <img src="{{ asset('images/sewing-machine-icon.png') }}" alt="RejectHandler" width="35" height="35"
+            style="vertical-align: middle;">
+        <span style="font-size: 2.0rem; vertical-align: middle;">
             <b>Reject</b>Handler
         </span>
     </a>
 @endsection
-
 @section('auth_body')
     <form action="{{ $loginUrl }}" method="post">
         @csrf
