@@ -11,3 +11,7 @@ src/.env.backup
 
 # Docker
 docker-compose.override.yml
+
+# Backup SQL
+backups/dev/*.sql
+backups/prod/*.sql
