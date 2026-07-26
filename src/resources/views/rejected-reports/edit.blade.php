@@ -124,6 +124,10 @@
 
 @section('js')
     <script>
+        window.addEventListener('load', function() {
+            history.replaceState(null, null, "{{ route('rejected-reports.index') }}");
+        });
+
         $('.btn-danger').click(function(e) {
             e.preventDefault();
             var form = $(this).closest('form');
