@@ -77,6 +77,10 @@
 
 @section('js')
     <script>
+        window.addEventListener('load', function() {
+            history.replaceState(null, null, "{{ route('users.index') }}");
+        });
+
         $('.btn-save').click(function(e) {
             Swal.fire({
                 title: 'Konfirmasi Simpan',
